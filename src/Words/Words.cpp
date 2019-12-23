@@ -2,13 +2,14 @@
 // Created by Jakub on 02-12-2019.
 //
 
-#include "Words.h"
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <algorithm>
+#include "Words.h"
 #include "../GameExceptions/GameExceptions.h"
 
 
@@ -20,32 +21,42 @@ void Words::loadWords(std::string &pathToWords) {
             throw WordsWrongPathException(pathToWords);
         }
 
-        int wordLength;
+        Word word;
         std::string line;
 
         while (std::getline(readFile, line)) {
-            if (line.length() < 4 || line.find(',') == std::string::npos) {
+            if (line.length() < 4 || line.length() > 100 || line.find(',') == std::string::npos) {
                 continue;
             } // Check if line is in correct format -> Category,Word
 
-            wordLength = wordSplit(line).word.length();
+            word = wordSplit(line);
 
-            if (wordLength < 8) { // Easy word length in range [1,7]
+            if (word.word.length() > 55 || word.category.length() > 44) continue; // Check restriction for word and category length
+            if (std::count(line.begin(), line.end(), ',') > 1) continue; // Check restriction for word and category allowed characters
+
+            for (char i : word.word) {
+                if (i > 122 || i < 32) goto next;
+            } // Check restriction for word allowed characters
+
+            for (char i : word.category) {
+                if (i > 122 || i < 32) goto next;
+            }  // Check restriction for category allowed characters
+
+            if (word.word.length() < 8) { // Easy word length in range [1,7]
                 this->words[Levels::Easy].push_back(line);
-            } else if (wordLength < 16) { // Medium word length in range [8, 15]
+            } else if (word.word.length() < 16) { // Medium word length in range [8, 15]
                 this->words[Levels::Medium].push_back(line);
             } else { // Hard word length in range [15,]
                 this->words[Levels::Hard].push_back(line);
             }
 
             this->wordsCount++; // Increment words count variable
+            next:;
         }
 
         readFile.close();
-        //return this->wordsCount;
     } catch (const WordsWrongPathException &e) {
         std::cout << e.what() << std::endl;
-        //return 0;
     }
 }
 
@@ -95,47 +106,4 @@ std::string *Words::getWordByLevel(Levels level) {
 Word Words::getRandomWordSplit(Levels levels) {
     std::string word{*this->getWordByLevel(levels)};
     return this->wordSplit(word);
-}
-
-char Words::extendAscii(char character) {
-    switch (character) {
-        case -71:
-            return static_cast<char>(165);
-        case -65:
-            return static_cast<char>(190);
-        case -97:
-            return static_cast<char>(171);
-        case -26:
-            return static_cast<char>(134);
-        case -15:
-            return static_cast<char>(228);
-        case -22:
-            return static_cast<char>(169);
-        case -77:
-            return static_cast<char>(136);
-        case -13:
-            return static_cast<char>(162);
-        case -100:
-            return static_cast<char>(152);
-        case -91:
-            return static_cast<char>(164);
-        case -81:
-            return static_cast<char>(189);
-        case -113:
-            return static_cast<char>(141);
-        case -58:
-            return static_cast<char>(143);
-        case -47:
-            return static_cast<char>(227);
-        case -54:
-            return static_cast<char>(168);
-        case -93:
-            return static_cast<char>(157);
-        case -45:
-            return static_cast<char>(224);
-        case -116:
-            return static_cast<char>(151);
-        default:
-            return character;
-    }
 }
