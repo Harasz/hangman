@@ -5,7 +5,7 @@
 #include "Board.h"
 #include <iostream>
 
-void Board::show(char** rows) {
+void Board::show(char **rows) {
     /*
      * Create boundary for bord ratio:
      * A A A A A
@@ -25,7 +25,7 @@ void Board::show(char** rows) {
     }
 }
 
-void Board::show(char** rows, char** rows1, char** rows2) {
+void Board::show(char **rows, char **rows1, char **rows2) {
     /*
      * Create boundary for bord ratio:
      * A A A B B

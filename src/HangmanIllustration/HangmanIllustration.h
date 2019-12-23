@@ -9,16 +9,25 @@
 #include "../Board/Board.h"
 
 class HangmanIllustration {
-    private:
-        short attempt{ 0 };
-        static const short illustrationCount{ 7 };
-        char*** loadIllustration();
-        char*** illustrations;
-    public:
-        explicit HangmanIllustration(short attempt = 0);
-        void increaseAttempt();
-        char** getIllustration();
-//        char** getIllustration(short attempt);
+private:
+    unsigned short attempt{0};
+    char ***illustrations;
+    static const short illustrationCount{7};
+
+    static char ***loadIllustration();
+
+public:
+    explicit HangmanIllustration(unsigned short attempt = 0);
+
+    void increaseAttempt();
+
+    char **getIllustration();
+
+    char **getIllustration(unsigned short attemptCustom);
+
+    unsigned short getAttempt();
+
+    void resetAttempt();
 };
 
 

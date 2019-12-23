@@ -1,0 +1,28 @@
+Aktorzy,Andrzej Grabowski
+Aktorzy,Mariusz Benoit
+Aktorzy,Jan Peszek
+Aktorzy,Piotr Fronczewski
+Aktorzy,Cezary Pazura
+Aktorzy,Maciej Stuhr
+Miasto,Gliwice
+Miasto,Warszawa
+Miasto,Kalisz
+Miasto,Tychy
+Jedzenie,Jogurt owocowy
+Jedzenie,Pizza
+Jedzenie,Spagetti carbonara
+Jedzenie,Bigos
+Jedzenie,Bulion wo³owy
+Jedzenie,Kotlet schobowy
+Jedzenie,Kartofle
+Dom,Apartament
+Dom,Tylne drzwi
+Dom,Piwnica
+Dom,Blok mieszkalny
+Edukacja,Frekwencja
+Edukacja,Wypracowanie
+Hadnel,Dom handlowy
+Hadnel,Nabywca
+Medycyna,Medycyna alternatywna
+Medycyna,Antybiotyk
+Medycyna,Zapalenie wyrostka robaczkowego

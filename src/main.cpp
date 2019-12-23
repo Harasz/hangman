@@ -1,32 +1,49 @@
-#include "Board/Board.h"
-#include "HangmanIllustration/HangmanIllustration.h"
+#define _WIN32_WINNT 0x0500
 
-int main() {
-    std::setlocale(LC_ALL, "pl_PL");
-    HangmanIllustration il(0);
+#include<windows.h>
+#include <string>
+#include "GameLogic/GameHangman.h"
 
-    char** welcome = new char*[10];
-    for (int i = 0; i < 10; ++i) {
-        welcome[i] = new char[40]{};
-    }
-    char** welcome1 = new char*[10];
-    for (int i = 0; i < 10; ++i) {
-        welcome1[i] = new char[20]{};
-    }
-    char** welcome2 = new char*[10];
-    for (int i = 0; i < 10; ++i) {
-        welcome2[i] = new char[60]{};
-    }
-    il.increaseAttempt();
-    il.increaseAttempt();
-    il.increaseAttempt();
-    il.increaseAttempt();
-    il.increaseAttempt();
-    il.increaseAttempt();
+int main(int argc, char *argv[]) {
+    std::setlocale(LC_ALL, "pl_PL"); // Set locale to pl_PL
+    system("cls"); // Clear Console
 
+    // Set console width and height to 515 and 380
+    HANDLE hOut;
+    CONSOLE_SCREEN_BUFFER_INFO SBInfo;
+    HWND console = GetConsoleWindow();
+    RECT ConsoleRect;
+    COORD NewSBSize;
+    GetWindowRect(console, &ConsoleRect);
+    MoveWindow(console, ConsoleRect.left, ConsoleRect.top, 515, 380, TRUE);
 
-    Board::show(il.getIllustration(), welcome1, welcome2);
+    hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    std::system("pause");
+    GetConsoleScreenBufferInfo(hOut, &SBInfo);
+    NewSBSize.X = SBInfo.dwSize.X - 2;
+    NewSBSize.Y = SBInfo.dwSize.Y;
+
+    SetConsoleScreenBufferSize(hOut, NewSBSize);
+
+    // Disable console resize
+    SetWindowLong(console, GWL_STYLE, GetWindowLong(console, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
+
+    // Hide console cursor
+    CONSOLE_CURSOR_INFO cursorInfo;
+    GetConsoleCursorInfo(console, &cursorInfo);
+    cursorInfo.dwSize = 100;
+    cursorInfo.bVisible = FALSE; // set the cursor visibility
+    SetConsoleCursorInfo(console, &cursorInfo);
+
+    // Set console title
+    SetConsoleTitle("Hangman Game By Jakub Sydor");
+
+    // Check if *argv[] has path to word list, else set path to "words.txt"
+    std::string pathToWordList = argc == 2 ? argv[1] : "words.txt";
+
+    // Init game class and start game
+    GameHangman game(pathToWordList);
+    game.startMenu();
+
     return 0;
 }
