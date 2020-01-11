@@ -412,11 +412,12 @@ void GameHangman::startGame() {
     }
 
     boardChosenLetter = GameHangman::showChosen(chosenLetter, chosenLetterCount);
-    boardInputPanel = this->showInputPanel(&drawnWord, chosenLetter, true, this->illustration.getAttempt() < 7);
+    boardInputPanel = this->showInputPanel(&drawnWord, chosenLetter, true, this->illustration.getAttempt() < 6);
     Board::show(this->illustration.getIllustration(), boardChosenLetter, boardInputPanel);
 
     delete[] boardChosenLetter;
     delete[] boardInputPanel;
+    delete drawnWordCstr;
 
     this->endGame();
 }
@@ -561,7 +562,7 @@ char **GameHangman::showInputPanel(Word *word, char chosenLetter[32], bool end, 
 }
 
 bool GameHangman::checkIfEnd(const char *chosenLetters, const char *wordLetters) {
-    if (this->illustration.getAttempt() >= 7) {
+    if (this->illustration.getAttempt() >= 6) {
         return true;
     }
 

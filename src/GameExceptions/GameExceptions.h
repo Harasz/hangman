@@ -30,5 +30,11 @@ public:
     const char *what() const noexcept override;
 };
 
+// BadInput
+class AttemptOutOfRange : public std::exception {
+public:
+    const char *what() const noexcept override;
+};
+
 
 #endif //HANGMAN_GAMEEXCEPTIONS_H

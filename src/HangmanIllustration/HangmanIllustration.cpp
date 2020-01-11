@@ -2,23 +2,23 @@
 // Created by Jakub Sydor on 25-11-2019.
 //
 
-#include <stdexcept>
 #include <string>
+#include <iostream>
 #include "HangmanIllustration.h"
+#include "../GameExceptions/GameExceptions.h"
 
 
-HangmanIllustration::HangmanIllustration(unsigned short attempt) {
+HangmanIllustration::HangmanIllustration(HangmanIllustration::AttemptIndex attempt) {
     if (attempt > HangmanIllustration::illustrationCount) {
-        throw std::invalid_argument("Number of attempts is out of range");
+        throw AttemptOutOfRange();
     }
     this->attempt = attempt;
     this->illustrations = HangmanIllustration::loadIllustration();
 }
 
 void HangmanIllustration::increaseAttempt() {
-    this->attempt++;
-    if (this->attempt > HangmanIllustration::illustrationCount) {
-        this->attempt = 0;
+    if (this->attempt < HangmanIllustration::illustrationCount) {
+        this->attempt++;
     }
 }
 
@@ -192,9 +192,9 @@ char **HangmanIllustration::getIllustration() {
     return this->illustrations[this->attempt];
 }
 
-char **HangmanIllustration::getIllustration(unsigned short attemptCustom) {
+char **HangmanIllustration::getIllustration(HangmanIllustration::AttemptIndex attemptCustom) {
     if (attemptCustom > HangmanIllustration::illustrationCount) {
-        throw std::invalid_argument("Number of attempts is out of range");
+        throw AttemptOutOfRange();
     }
     return this->illustrations[attemptCustom];
 }

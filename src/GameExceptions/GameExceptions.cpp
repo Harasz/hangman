@@ -23,3 +23,7 @@ const char *LevelOutOfRange::what() const noexcept {
 const char *UnexpectedInput::what() const noexcept {
     return "Nie można obsłużyć znaku wejścia.";
 }
+
+const char *AttemptOutOfRange::what() const noexcept {
+    return "Ilość prób gry spoza zakresu.";
+}
